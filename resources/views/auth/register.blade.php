@@ -3,7 +3,8 @@
 @section('title', __('Register'))
 
 @section('content')
-    <form>
+    <form method="POST" action="{{ route('auth.register') }}">
+        @csrf
         <div class="mb-3">
             <label for="first_name" class="form-label">{{ __('First Name') }}</label>
             <input type="text" class="form-control" id="first_name" name="firstname" placeholder="{{ __('Enter your first name') }}">
@@ -11,6 +12,10 @@
         <div class="mb-3">
             <label for="last_name" class="form-label">{{ __('Last Name') }}</label>
             <input type="text" class="form-control" id="last_name" name="lastname" placeholder="{{ __('Enter your last name') }}">
+        </div>
+        <div class="mb-3">
+            <label for="username" class="form-label">{{ __('Username') }}</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="{{ __('Enter username') }}">
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">{{ __('Email address') }}</label>
@@ -29,6 +34,6 @@
         </div>
     </form>
     <div class="text-center mt-3">
-        <small>{{ __('Already have an account?') }} <a href="#">{{ __('Login') }}</a></small>
+        <small>{{ __('Already have an account?') }} <a href="{{ route('auth.login') }}">{{ __('Login') }}</a></small>
     </div>
 @endsection
