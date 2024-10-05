@@ -22,7 +22,10 @@ return new class extends Migration
             $table->string('value');
             $table->string('sound')->nullable();
             $table->string('image')->nullable();
-            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->foreignId('category_id')
+                ->nullable()
+                ->constrained('categories')
+                ->nullOnDelete();
 
             $table->timestamps();
         });
