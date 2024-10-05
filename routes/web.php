@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Root\LetterController;
 use App\Http\Controllers\Root\WordController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,4 +34,13 @@ Route::middleware(['auth', 'role:root'])->prefix('/root')->group(function() {
             Route::put('/{word}', [WordController::class, 'update'])->name('update');
             Route::delete('/{word}', [WordController::class, 'destroy'])->name('destroy');
     });
+
+    Route::prefix('/letters')
+        ->name('letters.')
+        ->group(function() {
+           Route::get('/', [LetterController::class, 'index'])->name('index');
+           Route::post('/', [LetterController::class, 'store'])->name('store');
+           Route::get('/edit/{letter}', [LetterController::class, 'edit'])->name('edit');
+           Route::put('/{letter}', [LetterController::class, 'update'])->name('update');
+        });
 });
