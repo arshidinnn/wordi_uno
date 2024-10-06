@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Policies\RolePolicy;
 use App\Services\AuthService;
 use App\Services\FileService;
+use App\Services\Root\LetterService;
+use App\Services\Root\NumberService;
 use App\Services\Root\WordService;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -18,6 +20,9 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(WordService::class, WordService::class);
+        $this->app->bind(LetterService::class, LetterService::class);
+        $this->app->bind(NumberService::class, NumberService::class);
+
         $this->app->bind(AuthService::class, AuthService::class);
         $this->app->bind(FileService::class, FileService::class);
     }

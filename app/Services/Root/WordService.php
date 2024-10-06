@@ -71,6 +71,5 @@ class WordService
         return redirect()
             ->route('words.index')
             ->with('success', __('Word removed successfully'));
-
     }
 }

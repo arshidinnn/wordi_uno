@@ -13,8 +13,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        Numbers
+                    <a class="nav-link" href="{{ route('numbers.index') }}">
+                        {{ __('Numbers') }}
                     </a>
                 </li>
             </ul>
