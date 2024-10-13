@@ -17,12 +17,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('task_number', function (Blueprint $table) {
-            $table->foreignId('task_id')->constrained('tasks')->cascadeOnDelete();
-            $table->foreignId('number_id')->constrained('numbers')->cascadeOnDelete();
-            $table->timestamps();
-        });
-
         Schema::create('task_result', function (Blueprint $table) {
             $table->id();
             $table->foreignId('task_id')->constrained('tasks')->cascadeOnDelete();
@@ -39,7 +33,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('task_result');
-        Schema::dropIfExists('task_number');
         Schema::dropIfExists('task_word');
     }
 };
