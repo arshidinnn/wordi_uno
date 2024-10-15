@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('modes', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->string('name')->primary();
             $table->string('subject');
             $table->timestamps();
         });
@@ -22,7 +21,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('type');
-            $table->foreignId('mode_id')->constrained('modes')->cascadeOnDelete();
+            $table->string('mode');
+            $table->foreign('mode')->references('name')->on('modes')->cascadeOnDelete();
             $table->foreignId('group_id')->nullable()->constrained('groups')->nullOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('teacher_id')->constrained('users')->cascadeOnDelete();
@@ -33,7 +33,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('task_id')->constrained()->cascadeOnDelete();
             $table->string('number_range')->nullable();
-//            $table->enum('number_range', ['single_digit', 'double_digit', 'triple_digit'])->nullable();
             $table->integer('iteration_timer')->nullable();
             $table->integer('overall_timer')->nullable();
             $table->boolean('show_corrected_answer')->default(false);
