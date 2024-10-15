@@ -7,8 +7,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static RedirectResponse store(\App\Http\Requests\Words\StoreWordRequest $request)
- * @method static RedirectResponse update(\App\Http\Requests\Words\UpdateWordRequest $request, \App\Models\Word $word)
+ * @method static RedirectResponse store(\App\Http\Requests\Root\Words\StoreWordRequest $request)
+ * @method static RedirectResponse update(\App\Http\Requests\Root\Words\UpdateWordRequest $request, \App\Models\Word $word)
  * @method static RedirectResponse destroy(\App\Models\Word $word)
  *
  * @see WordService

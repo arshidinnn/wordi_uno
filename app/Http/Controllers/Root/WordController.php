@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Root;
 
 use App\Facades\Root\WordFacade as WordService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Words\StoreWordRequest;
-use App\Http\Requests\Words\UpdateWordRequest;
+use App\Http\Requests\Root\Words\StoreWordRequest;
+use App\Http\Requests\Root\Words\UpdateWordRequest;
 use App\Models\Word;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;

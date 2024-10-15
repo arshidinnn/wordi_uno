@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static \Illuminate\Http\RedirectResponse store()
- * @method static \Illuminate\Http\RedirectResponse update(\App\Http\Requests\Letters\UpdateLetterRequest $request, \App\Models\Letter $letter)
+ * @method static \Illuminate\Http\RedirectResponse update(\App\Http\Requests\Root\Letters\UpdateLetterRequest $request, \App\Models\Letter $letter)
  *
  * @see LetterService
  */

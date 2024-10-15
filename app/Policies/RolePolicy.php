@@ -16,7 +16,7 @@ class RolePolicy
         return $user->role === 'teacher';
     }
 
-    public function isChild(User $user): bool
+    public function isStudent(User $user): bool
     {
         return $user->role === 'child';
     }

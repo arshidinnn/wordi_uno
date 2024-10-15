@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static \Illuminate\Http\RedirectResponse store()
- * @method static \Illuminate\Http\RedirectResponse update(\App\Http\Requests\Numbers\UpdateNumberRequest $request, \App\Models\Number $number)
+ * @method static \Illuminate\Http\RedirectResponse update(\App\Http\Requests\Root\Numbers\UpdateNumberRequest $request, \App\Models\Number $number)
  *
  * @see NumberService
  */

@@ -3,7 +3,7 @@
 namespace App\Services\Root;
 
 use App\Facades\FileFacade as File;
-use App\Http\Requests\Numbers\UpdateNumberRequest;
+use App\Http\Requests\Root\Numbers\UpdateNumberRequest;
 use App\Models\Number;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Artisan;

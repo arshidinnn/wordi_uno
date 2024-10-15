@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Root;
 
 use App\Facades\Root\NumberFacade as NumberService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Numbers\UpdateNumberRequest;
+use App\Http\Requests\Root\Numbers\UpdateNumberRequest;
 use App\Models\Number;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;

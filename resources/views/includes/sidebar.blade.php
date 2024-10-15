@@ -19,5 +19,18 @@
                 </li>
             </ul>
         @endcan
+        @can('isTeacher', \App\Models\User::class)
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('groups.index') }}">
+                            {{ __('Groups') }}
+                        </a>
+
+                        <a class="nav-link active" href="{{ route('tasks.index') }}">
+                            {{ __('Tasks') }}
+                        </a>
+                    </li>
+                </ul>
+        @endcan
     </div>
 </nav>

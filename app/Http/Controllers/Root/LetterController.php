@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Root;
 
+use App\Facades\Root\LetterFacade as LetterService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Letters\UpdateLetterRequest;
+use App\Http\Requests\Root\Letters\UpdateLetterRequest;
 use App\Models\Letter;
 use Illuminate\Contracts\View\View;
-use App\Facades\Root\LetterFacade as LetterService;
 use Illuminate\Http\RedirectResponse;
 
 class LetterController extends Controller

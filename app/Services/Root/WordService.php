@@ -2,10 +2,10 @@
 
 namespace App\Services\Root;
 
-use App\Http\Requests\Words\StoreWordRequest;
-use App\Http\Requests\Words\UpdateWordRequest;
-use App\Models\Word;
 use App\Facades\FileFacade as File;
+use App\Http\Requests\Root\Words\StoreWordRequest;
+use App\Http\Requests\Root\Words\UpdateWordRequest;
+use App\Models\Word;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
