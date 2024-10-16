@@ -60,4 +60,11 @@ class Task extends Model
     {
         return $this->hasOne(Setting::class);
     }
+
+    public static function getStudentTasks(User $student)
+    {
+        return self::query()->where('user_id', $student->id)
+            ->orWhere('group_id', $student->group_id)
+            ->get();
+    }
 }

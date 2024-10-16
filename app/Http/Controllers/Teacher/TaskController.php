@@ -11,6 +11,7 @@ use App\Http\Requests\Teacher\Task\UpdateTaskRequest;
 use App\Models\Group;
 use App\Models\Task;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,7 +36,7 @@ class TaskController extends Controller
         return view('teacher.tasks.create', compact('subjects', 'modes'));
     }
 
-    public function store(StoreTaskRequest $request)
+    public function store(StoreTaskRequest $request): RedirectResponse
     {
         return TaskService::store($request);
     }

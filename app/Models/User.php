@@ -12,6 +12,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 
+
 /**
  * 
  *
@@ -71,6 +72,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'student_password',
         'role',
         'teacher_id',
     ];
