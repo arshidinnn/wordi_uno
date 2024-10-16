@@ -22,22 +22,18 @@ class AuthService
             'role' => 'teacher',
         ]);
 
-        Auth::login($user);
+        Auth::login($user, true);
 
-        if ($user->role === 'root') {
-            return redirect()->route('words.index');
-        }
-
-        return redirect()->route('teachers.dashboard');
+        return $this->redirectByRole($user);
     }
 
     public function login(LoginRequest $request): RedirectResponse
     {
         $credentials = $request->only(['username', 'password']);
 
-        if (!Auth::attempt($credentials)) {
+        if (!Auth::attempt($credentials, true)) {
             return back()
-                ->withErrors(['username' => __('The provided credentials do not match our records.'),])
+                ->withErrors(['username' => __('The provided credentials do not match our records.')])
                 ->withInput();
         }
 
@@ -46,11 +42,7 @@ class AuthService
         /** @var User $user */
         $user = Auth::user();
 
-        if ($user->role === 'root') {
-            return redirect()->route('words.index');
-        }
-
-        return redirect()->intended(route('teachers.dashboard'));
+        return $this->redirectByRole($user);
     }
 
     public function logout(): RedirectResponse
@@ -60,5 +52,19 @@ class AuthService
         request()->session()->regenerateToken();
 
         return redirect()->route('auth.login');
+    }
+
+    private function redirectByRole(User $user): RedirectResponse
+    {
+        if ($user->role === 'root') {
+            return redirect()->route('words.index');
+        }
+
+        if ($user->role === 'teacher') {
+            return redirect()->route('groups.index');
+        }
+
+        return redirect()->route('students.tasks.index');
+
     }
 }
