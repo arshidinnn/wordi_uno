@@ -226,6 +226,7 @@
                 let targetType = $('#target_type').val();
                 let timersEnabled = $('#timers_enabled').is(':checked');
                 let taskType = $('#type').val();
+                let mode = $('#mode').val();
 
                 if (selectedSubject) {
                     $('#mode_div').show();
@@ -261,7 +262,6 @@
                     $('#deadline_div').hide();
                 }
 
-                // Показать поле question_count, если тип learning
                 if (taskType === 'test') {
                     $('#question_count_div').show();
                 } else {
@@ -269,11 +269,38 @@
                 }
             }
 
-            updateVisibility(); // On page load
+            updateVisibility();
 
             $('#subject, #target_type, #timers_enabled, #type').change(updateVisibility);
-        });
 
+            $('#task-form').on('submit', function (e) {
+                let targetType = $('#target_type').val();
+                let mode = $('#mode').val();
+                let timersEnabled = $('#timers_enabled').is(':checked');
+                let taskType = $('#type').val();
+
+                if (targetType === 'user') {
+                    $('#group_id').val('');
+                } else if (targetType === 'group') {
+                    $('#user_id').val('');
+                }
+
+                if (mode !== 'number') {
+                    $('#number_range').val('');
+                }
+
+                if (!timersEnabled) {
+                    $('#timer_type').val('');
+                    $('#timer_value').val('');
+                }
+
+                if (taskType !== 'test') {
+                    $('#question_count').val('');
+                    $('#deadline').val('');
+                }
+            });
+        });
     </script>
+
 @endpush
 
