@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Root\LetterController;
 use App\Http\Controllers\Root\NumberController;
 use App\Http\Controllers\Root\WordController;
+use App\Http\Controllers\Student\TaskController as StudentTaskController;
 use App\Http\Controllers\Teacher\GroupController;
 use App\Http\Controllers\Teacher\TaskController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +17,9 @@ Route::middleware('guest')->group(function() {
     Route::get('/register', [RegisterController::class, 'index'])->name('auth.showRegisterForm');
     Route::post('/register', [RegisterController::class, 'register'])->name('auth.register');
     Route::post('/login', [LoginController::class, 'login'])->name('auth.login');
+    Route::post('/logout', LogoutController::class)->name('auth.logout')
+        ->withoutMiddleware('guest')
+        ->middleware('auth');
 });
 
 
@@ -80,6 +85,13 @@ Route::middleware(['auth', 'role:teacher'])->prefix('/teacher')->group(function(
             Route::put('/{task}', [TaskController::class, 'update'])->name('update');
             Route::delete('/{task}', [TaskController::class, 'destroy'])->name('destroy');
         });
+});
 
-
+Route::middleware(['auth', 'role:student'])->prefix('/student')->group(function() {
+    Route::prefix('/tasks')
+        ->name('student.tasks.')
+        ->group(function() {
+            Route::get('/', [StudentTaskController::class, 'index'])->name('index');
+            Route::get('/{task}', [StudentTaskController::class, 'show'])->name('show');
+        });
 });
