@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Root\LetterController;
+use App\Http\Controllers\Root\ModeController;
 use App\Http\Controllers\Root\NumberController;
 use App\Http\Controllers\Root\WordController;
 use App\Http\Controllers\Student\TaskController as StudentTaskController;
@@ -59,6 +60,15 @@ Route::middleware(['auth', 'role:root'])->prefix('/root')->group(function() {
             Route::post('/', [NumberController::class, 'store'])->name('store');
             Route::get('/edit/{number}', [NumberController::class, 'edit'])->name('edit');
             Route::put('/{number}', [NumberController::class, 'update'])->name('update');
+        });
+
+    Route::prefix('/modes')
+        ->name('modes.')
+        ->group(function() {
+            Route::get('/', [ModeController::class, 'index'])->name('index');
+            Route::post('/', [ModeController::class, 'store'])->name('store');
+            Route::get('/edit/{mode}', [ModeController::class, 'edit'])->name('edit');
+            Route::put('/{mode}', [ModeController::class, 'update'])->name('update');
         });
 });
 

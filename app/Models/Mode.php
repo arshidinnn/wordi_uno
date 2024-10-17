@@ -14,10 +14,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property SubjectTypes $subject
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $image
  * @method static \Illuminate\Database\Eloquent\Builder|Mode newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Mode newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Mode query()
  * @method static \Illuminate\Database\Eloquent\Builder|Mode whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mode whereImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mode whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mode whereSubject($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mode whereUpdatedAt($value)
@@ -34,6 +36,7 @@ class Mode extends Model
     protected $fillable = [
         'name',
         'subject',
+        'image'
     ];
 
     protected $casts = [

@@ -142,7 +142,7 @@
             <select id="number_range" name="number_range" class="form-control @error('number_range') is-invalid @enderror">
                 <option value="" disabled selected hidden>Select number range</option>
                 @foreach(\App\Enums\NumberRange::getNumberRanges() as $number_range)
-                    <option value="{{ $number_range }}" @if(old('number_range') == $number_range) selected @endif> {{ __($number_range) }}</option>
+                    <option value="{{ $number_range }}" @if(old('number_range') == $number_range) selected @endif>{{ __($number_range) }}</option>
                 @endforeach
             </select>
             @error('number_range')
@@ -226,20 +226,16 @@
                 let targetType = $('#target_type').val();
                 let timersEnabled = $('#timers_enabled').is(':checked');
                 let taskType = $('#type').val();
-                let mode = $('#mode').val();
 
-                if (selectedSubject) {
-                    $('#mode_div').show();
-                    $('.mode-group').hide();
-                    $('.mode-group[data-subject="' + selectedSubject + '"]').show();
-                }
-
+                // Показать или скрыть поле number_range в зависимости от значения subject
                 if (selectedSubject === 'number') {
                     $('#number_range_div').show();
                 } else {
                     $('#number_range_div').hide();
+                    $('#number_range').val('');
                 }
 
+                // Показать или скрыть поле group_id или user_id в зависимости от выбранного типа цели
                 if (targetType === 'group') {
                     $('#group_id_div').show();
                     $('#user_id_div').hide();
@@ -248,58 +244,74 @@
                     $('#group_id_div').hide();
                 }
 
+                // Логика отображения таймеров в зависимости от timers_enabled и taskType
                 if (timersEnabled) {
-                    $('#timer_type_div').show();
+                    if (taskType === 'learning') {
+                        $('#timer_type_div').hide();
+                        $('#timer_type').val('iteration_timer'); // Автоматически устанавливаем значение
+                    } else if (taskType === 'test') {
+                        $('#timer_type_div').show();
+                    }
                     $('#timer_value_div').show();
                 } else {
                     $('#timer_type_div').hide();
                     $('#timer_value_div').hide();
                 }
 
+                // Показать поле deadline и question_count, если тип задания - test
                 if (taskType === 'test') {
                     $('#deadline_div').show();
-                } else {
-                    $('#deadline_div').hide();
-                }
-
-                if (taskType === 'test') {
                     $('#question_count_div').show();
                 } else {
+                    $('#deadline_div').hide();
                     $('#question_count_div').hide();
+                }
+
+                // Показать или скрыть поле mode в зависимости от выбранного subject
+                if (selectedSubject) {
+                    $('#mode_div').show();
+                    $('.mode-group').hide();
+                    $('.mode-group[data-subject="' + selectedSubject + '"]').show();
+                } else {
+                    $('#mode_div').hide();
                 }
             }
 
+            // Инициализация видимости полей при загрузке страницы
             updateVisibility();
 
-            $('#subject, #target_type, #timers_enabled, #type').change(updateVisibility);
+            // Обновление видимости при изменении значений subject, target_type, timers_enabled, type
+            $('#subject').change(function() {
+                $('#mode').val('');
+                updateVisibility();
+            });
 
-            $('#task-form').on('submit', function (e) {
-                let targetType = $('#target_type').val();
-                let mode = $('#mode').val();
-                let timersEnabled = $('#timers_enabled').is(':checked');
+            $('#target_type, #timers_enabled, #type').change(function() {
                 let taskType = $('#type').val();
 
-                if (targetType === 'user') {
-                    $('#group_id').val('');
-                } else if (targetType === 'group') {
-                    $('#user_id').val('');
+                // Автоматически устанавливаем timer_type в iteration_timer, если тип задания - learning
+                if (taskType === 'learning') {
+                    $('#timer_type').val('iteration_timer');
                 }
-
-                if (mode !== 'number') {
-                    $('#number_range').val('');
-                }
-
-                if (!timersEnabled) {
+                // Сбрасываем timer_type, если тип задания - test
+                else if (taskType === 'test') {
                     $('#timer_type').val('');
-                    $('#timer_value').val('');
                 }
 
-                if (taskType !== 'test') {
-                    $('#question_count').val('');
-                    $('#deadline').val('');
+                updateVisibility();
+            });
+
+            // Очистка ненужных значений перед отправкой формы
+            $('#task-form').on('submit', function () {
+                let selectedSubject = $('#subject').val();
+
+                // Если subject не равен 'number', очищаем поле number_range
+                if (selectedSubject !== 'number') {
+                    $('#number_range').val('');
                 }
             });
         });
+
     </script>
 
 @endpush

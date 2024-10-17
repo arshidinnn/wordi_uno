@@ -18,13 +18,13 @@ class TaskController extends Controller
         $student = Auth::user();
 
         $tasks = Task::getStudentTasks($student);
-
         return view('student.tasks.index', compact('tasks'));
     }
 
     public function show(Task $task): View
     {
+        $settings = $task->setting()->first();
         $this->authorize('isStudent', Auth::user());
-        return view('student.tasks.show', compact('task'));
+        return view('student.tasks.show', compact('task', 'settings'));
     }
 }

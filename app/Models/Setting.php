@@ -45,11 +45,13 @@ class Setting extends Model
 
     protected $fillable = [
         'number_range',
-        'iteration_timer',
-        'overall_timer',
+        'timer_type',
+        'timers_enabled',
+        'timer_value',
         'show_corrected_answer',
         'deadline',
-        'question_count'
+        'question_count',
+        'number_range',
     ];
 
     protected $casts = [

@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
@@ -61,10 +61,17 @@ class Task extends Model
         return $this->hasOne(Setting::class);
     }
 
+    public function withMode(): BelongsTo
+    {
+        return $this->belongsTo(Mode::class, 'mode', 'name');
+    }
+
+
     public static function getStudentTasks(User $student)
     {
         return self::query()->where('user_id', $student->id)
             ->orWhere('group_id', $student->group_id)
+            ->with('withMode')
             ->get();
     }
 }

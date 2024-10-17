@@ -21,6 +21,11 @@
                             <i class="fas fa-hashtag"></i> {{ __('Numbers') }}
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('modes.index') ? 'active' : '' }}" href="{{ route('modes.index') }}">
+                            <i class="fas fa-cogs"></i> {{ __('Modes') }}
+                        </a>
+                    </li>
                 </ul>
             @endcan
             @can('isTeacher', \App\Models\User::class)

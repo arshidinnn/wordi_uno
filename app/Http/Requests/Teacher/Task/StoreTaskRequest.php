@@ -22,7 +22,7 @@ class StoreTaskRequest extends FormRequest
             'group_id' => ['nullable', 'required_if:target_type,group', 'exists:groups,id'],
             'user_id' => ['nullable', 'required_if:target_type,user', 'exists:users,id'],
 
-            'number_range' => ['nullable', 'required_if:mode,number', new Enum(NumberRange::class)],
+            'number_range' => ['nullable', 'required_if:subject,number', new Enum(NumberRange::class),],
             'timers_enabled' => 'required|boolean',
             'timer_type' => ['nullable', 'required_if:timers_enabled,1', 'string', 'in:iteration_timer,overall_timer'],
             'timer_value' => ['nullable', 'required_if:timers_enabled,1', 'integer', 'min:5'],
@@ -36,17 +36,12 @@ class StoreTaskRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $mode = $this->input('mode');
+            $subject = $this->input('subject');
 
-            if ($mode) {
-                $subject = DB::table('modes')
-                    ->where('name', $mode)
-                    ->value('subject');
-
-                if ($subject === 'number') {
-                    $validator->addRules([
-                        'number_range' => ['required', new Enum(NumberRange::class)],
-                    ]);
-                }
+            if ($mode === 'number' && $subject === 'number') {
+                $validator->addRules([
+                    'number_range' => ['required', new Enum(NumberRange::class)],
+                ]);
             }
         });
     }

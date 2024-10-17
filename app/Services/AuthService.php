@@ -64,7 +64,7 @@ class AuthService
             return redirect()->route('groups.index');
         }
 
-        return redirect()->route('students.tasks.index');
+        return redirect()->route('student.tasks.index');
 
     }
 }

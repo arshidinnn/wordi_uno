@@ -20,17 +20,22 @@
 @endpush
 
 @section('content')
+
     <h2 class="text-center mb-4">Қазақ әліпбиін бірге үйренейік!</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach($tasks as $task)
             <div class="col">
                 <a href="{{ route('student.tasks.show', ['task' => $task]) }}" class="card-link">
                     <div class="card h-100 text-center">
-                        <img src="https://via.placeholder.com/150" class="card-img-top p-3" alt="{{ $task->name }}">
+                        <div class="d-flex justify-content-center">
+                            @if($task->withMode && $task->withMode->image)
+                                <img src="{{ $task->withMode->image }}" class="card-img-top img-fluid w-50 p-3" alt="{{ $task->name }}">
+                            @else
+                                <img src="https://via.placeholder.com/150" class="card-img-top img-fluid w-50 p-3" alt="{{ $task->name }}">
+                            @endif
+                        </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ $task->name }}</h5>
-                            <p class="card-text">{{ $task->type }}</p>
-                            <p class="card-text">{{ $task->mode }}</p>
                         </div>
                     </div>
                 </a>
