@@ -39,8 +39,11 @@
     <div class="modal fade" id="finalResultModal" tabindex="-1" aria-labelledby="finalResultModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-center border-0">
+                <div class="modal-header border-0">
+                    <h2 class="modal-title w-100" id="finalResultModalLabel">Результат</h2>
+                </div>
                 <div class="modal-body">
-                    <p class="h2" id="finalResultMessage">Результат</p>
+                    <p class="h1" id="finalResultScore">0/0</p>
                     <div class="mt-4">
                         <button class="btn btn-primary" id="startAgainBtn">Начать сначала</button>
                         <button class="btn btn-secondary" id="closeBtn">Закрыть</button>
@@ -49,6 +52,7 @@
             </div>
         </div>
     </div>
+
 
 @endsection
 
@@ -61,11 +65,36 @@
             const numberRange = @json($settings->number_range);
             const showCorrectedAnswer = @json($settings->show_corrected_answer);
             const timersEnabled = @json($settings->timers_enabled);
-            const timerType = @json($settings->timer_type);
+            let timerType = @json($settings->timer_type);
             const timerValue = @json($settings->timer_value);
             const mode = @json($task->mode);
+            const questionCount = @json($settings->question_count);
+            const taskType = @json($task->type);
+
             let timerInterval;
             let currentTime = timerValue;
+            let currentQuestion = 0;
+            let correctAnswers = 0;
+
+            if (taskType === 'learning' && timersEnabled) {
+                timerType = 'iteration_timer';
+            }
+
+            function startOverallTimer() {
+                if (timersEnabled && timerType === 'overall_timer') {
+                    currentTime = timerValue;
+                    $('#timerDisplay').text(currentTime);
+                    timerInterval = setInterval(() => {
+                        currentTime--;
+                        $('#timerDisplay').text(currentTime);
+                        if (currentTime <= 0) {
+                            clearInterval(timerInterval);
+                            $('#finalResultScore').text(`${correctAnswers}/${questionCount}`);
+                            $('#finalResultModal').modal('show');
+                        }
+                    }, 1000);
+                }
+            }
 
             function startIterationTimer() {
                 if (timersEnabled && timerType === 'iteration_timer') {
@@ -82,8 +111,7 @@
                             $('#resultModal').modal('show');
                             setTimeout(() => {
                                 $('#resultModal').modal('hide');
-                                generateTask();
-                                startIterationTimer();
+                                handleNextTask();
                             }, 2000);
                         }
                     }, 1000);
@@ -139,6 +167,39 @@
                 userInput = '';
             }
 
+            function handleNextTask() {
+                currentQuestion++;
+
+                if (taskType === 'test' && currentQuestion >= questionCount) {
+                    $('#finalResultScore').text(`${correctAnswers}/${questionCount}`);
+                    $('#finalResultModal').modal('show');
+                    if (timerType !== 'overall_timer') {
+                        clearInterval(timerInterval);
+                    }
+                } else {
+                    generateTask();
+                    if (timerType === 'iteration_timer') {
+                        startIterationTimer();
+                    }
+                }
+            }
+
+            $('#startAgainBtn').on('click', function () {
+                currentQuestion = 0;
+                correctAnswers = 0;
+                $('#finalResultModal').modal('hide');
+                generateTask();
+                if (timerType === 'overall_timer') {
+                    startOverallTimer();
+                } else {
+                    startIterationTimer();
+                }
+            });
+
+            $('#closeBtn').on('click', function () {
+                window.location.href = "{{ route('student.tasks.index') }}";
+            });
+
             function updateDisplay() {
                 const display = userInput.padEnd(underscores.length, '_');
                 $('h2.custom-display').text(function (index, text) {
@@ -156,15 +217,21 @@
                         resultMessage += ` Правильный ответ: ${correctResult}`;
                     }
 
+                    if (isCorrect) {
+                        correctAnswers++;
+                    }
+
                     $('#resultIcon').attr('src', `/icons/${resultIcon}`);
                     $('#resultModal p').text(resultMessage);
                     $('#resultModal').modal('show');
-                    clearInterval(timerInterval);
                     setTimeout(function () {
                         $('#resultModal').modal('hide');
-                        generateTask();
-                        startIterationTimer();
+                        handleNextTask();
                     }, 2000);
+
+                    if (timerType !== 'overall_timer') {
+                        clearInterval(timerInterval);
+                    }
                 }
             }
 
@@ -182,8 +249,13 @@
             }
 
             setInterval(fetchSymbol, 300);
+
             generateTask();
-            startIterationTimer();
+            if (timerType === 'overall_timer') {
+                startOverallTimer();
+            } else {
+                startIterationTimer();
+            }
         });
     </script>
 @endpush
