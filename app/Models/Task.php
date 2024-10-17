@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $name
@@ -35,6 +35,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereUserId($value)
+ * @property-read \App\Models\Group|null $group
+ * @property-read \App\Models\User|null $user
+ * @property-read \App\Models\Mode $withMode
  * @mixin \Eloquent
  */
 class Task extends Model
@@ -73,5 +76,15 @@ class Task extends Model
             ->orWhere('group_id', $student->group_id)
             ->with('withMode')
             ->get();
+    }
+
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(Group::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

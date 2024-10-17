@@ -14,7 +14,9 @@ class GroupController extends Controller
 {
     public function index(): View
     {
-        return view('teacher.groups.index');
+        $groups = Group::withCount('students')->paginate(10);
+
+        return view('teacher.groups.index', compact('groups'));
     }
 
     public function create(): View
@@ -26,11 +28,12 @@ class GroupController extends Controller
     {
         return GroupService::store($request);
     }
-    public function show(Group $group)
+    public function show(Group $group): View
     {
-        //
-    }
+        $group->load('students');
 
+        return view('teacher.groups.show', compact('group'));
+    }
     public function edit(Group $group): View
     {
         return view('teacher.groups.edit', compact('group'));
@@ -41,11 +44,10 @@ class GroupController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Group $group)
+
+    public function destroy(Group $group): RedirectResponse
     {
-        //
+        $group->delete();
+        return back()->with('success', 'Group deleted successfully');
     }
 }

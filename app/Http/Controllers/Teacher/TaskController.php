@@ -10,6 +10,7 @@ use App\Http\Requests\Teacher\Task\StoreTaskRequest;
 use App\Http\Requests\Teacher\Task\UpdateTaskRequest;
 use App\Models\Group;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,8 +20,10 @@ class TaskController extends Controller
 {
     public function index(): View
     {
-
-        return view('teacher.tasks.index');
+        /** @var User $user */
+        $user = Auth::user();
+        $tasks = $user->tasks()->with(['group', 'user'])->paginate(10);
+        return view('teacher.tasks.index', compact('tasks'));
     }
 
 
@@ -41,9 +44,9 @@ class TaskController extends Controller
         return TaskService::store($request);
     }
 
-    public function edit(Task $task)
-    {}
-
-    public function update(UpdateTaskRequest $request, Task $task)
-    {}
+    public function destroy(Task $task): RedirectResponse
+    {
+        $task->delete();
+        return back()->with('success', 'Task deleted successfully');
+    }
 }

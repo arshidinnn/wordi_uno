@@ -55,6 +55,8 @@ use Illuminate\Support\Facades\Auth;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTeacherId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUsername($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Task> $tasks
+ * @property-read int|null $tasks_count
  * @mixin \Eloquent
  */
 class User extends Authenticatable
@@ -110,7 +112,7 @@ class User extends Authenticatable
         return $this->belongsTo(Group::class);
     }
 
-    public function task(): HasMany
+    public function tasks(): HasMany
     {
         return  $this->hasMany(Task::class, 'teacher_id');
     }

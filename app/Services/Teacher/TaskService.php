@@ -18,7 +18,7 @@ class TaskService
 
         DB::transaction(function() use ($request, $teacher) {
             /** @var Task $task */
-            $task = $teacher->task()->create([
+            $task = $teacher->tasks()->create([
                 'name' => $request->input('name'),
                 'type' => $request->input('type'),
                 'mode' => $request->input('mode'),

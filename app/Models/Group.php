@@ -48,6 +48,12 @@ class Group extends Model
         return $this->hasMany(User::class);
     }
 
+    public function getStudentsCountAttribute(): int
+    {
+        return $this->students()->count();
+    }
+
+
     public static function getAuthTeacherGroups(): Collection
     {
         /** @var User $user */
