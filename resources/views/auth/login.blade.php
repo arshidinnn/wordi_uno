@@ -1,14 +1,14 @@
 @extends('layouts.auth')
 
-@section('title', __('Login'))
+@section('title', 'Кіру')
 
 @section('content')
     <form method="POST" action="{{ route('auth.login') }}">
         @csrf
         <div class="mb-3">
-            <label for="username" class="form-label">{{ __('Username') }}</label>
+            <label for="username" class="form-label">Пайдаланушы аты</label>
             <input type="text" class="form-control @error('username') is-invalid @enderror" id="username"
-                   name="username" placeholder="{{ __('Enter your username') }}" value="{{ old('username') }}">
+                   name="username" placeholder="Пайдаланушы атыңызды енгізіңіз" value="{{ old('username') }}">
 
             @error('username')
             <div class="invalid-feedback">
@@ -17,12 +17,12 @@
             @enderror
         </div>
         <div class="mb-3">
-            <label for="password" class="form-label">{{ __('Password') }}</label>
+            <label for="password" class="form-label">Құпиясөз</label>
             <input type="password"
                    class="form-control @error('password') is-invalid @enderror"
                    id="password"
                    name="password"
-                   placeholder="{{ __('Enter your password') }}">
+                   placeholder="Құпиясөзіңізді енгізіңіз">
             @error('password')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -30,13 +30,10 @@
             @enderror
         </div>
         <div class="d-grid">
-            <button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
+            <button type="submit" class="btn btn-primary">Кіру</button>
         </div>
     </form>
-    <div class="text-center mt-3">
-        <a href="#">{{ __('Forgot password?') }}</a>
-    </div>
     <div class="text-center mt-2">
-        <small>{{ __("Don't have an account?") }} <a href="{{ route('auth.register') }}">{{ __('Sign up') }}</a></small>
+        <small>Аккаунтыңыз жоқ па? <a href="{{ route('auth.register') }}">Тіркелу</a></small>
     </div>
 @endsection

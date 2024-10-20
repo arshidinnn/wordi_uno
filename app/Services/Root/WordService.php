@@ -32,7 +32,7 @@ class WordService
 
         return redirect()
             ->route('words.index')
-            ->with('success', __('Word added successfully'));
+            ->with('success', 'Сөз сәтті қосылды');
     }
 
     public function update(UpdateWordRequest $request, Word $word): RedirectResponse
@@ -54,7 +54,7 @@ class WordService
 
         return redirect()
             ->route('words.index')
-            ->with('success', __('Word updated successfully'));
+            ->with('success', 'Сөз сәтті жаңартылды');
     }
 
     public function destroy(Word $word): RedirectResponse
@@ -70,6 +70,6 @@ class WordService
 
         return redirect()
             ->route('words.index')
-            ->with('success', __('Word removed successfully'));
+            ->with('success', 'Сөз сәтті жойылды');
     }
 }

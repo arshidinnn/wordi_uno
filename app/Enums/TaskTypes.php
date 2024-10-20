@@ -15,4 +15,23 @@ enum TaskTypes:string
         }
         return $types;
     }
+
+    public static function getTaskTypesWithTranslations(): array
+    {
+        return [
+            self::LEARNING->value => 'Зерттеу',
+            self::TEST->value => 'Бақылау',
+        ];
+    }
+
+    public static function translate(string $value): string
+    {
+        return match ($value) {
+            self::LEARNING->value => 'Зерттеу',
+            self::TEST->value => 'Бақылау',
+            default => 'Unknown',
+        };
+    }
+
+
 }

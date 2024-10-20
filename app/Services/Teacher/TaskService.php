@@ -39,6 +39,6 @@ class TaskService
 
         return redirect()
             ->route('tasks.index')
-            ->with('success', __('Task created successfully'));
+            ->with('success', 'Тапсырма сәтті жасалды');
     }
 }

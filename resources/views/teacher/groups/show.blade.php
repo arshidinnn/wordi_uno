@@ -1,27 +1,28 @@
 @extends('layouts.index')
 
-@section('title', __('Group Details'))
+@section('title', 'Топ туралы мәлімет')
 
 @section('content')
     <div class="mb-3">
-        <a href="{{ route('groups.index') }}" class="btn btn-secondary">{{ __('Back') }}</a>
+        <a href="{{ route('groups.index') }}" class="btn btn-secondary">Артқа</a>
     </div>
 
     <h2>{{ $group->name }}</h2>
 
     @if($group->students->isEmpty())
         <div class="alert alert-warning">
-            {{ __('No students found in this group.') }}
+            Бұл топта студенттер табылмады.
         </div>
     @else
-        <!-- Table -->
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead class="table-light">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
+                    <th scope="col">Аты</th>
+                    <th scope="col">Тегі</th>
+                    <th scope="col">Пайдаланушы аты</th>
+                    <th scope="col">Студент паролі</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -30,6 +31,8 @@
                         <th scope="row">{{ $loop->iteration }}</th>
                         <td>{{ $student->firstname }}</td>
                         <td>{{ $student->lastname }}</td>
+                        <td>{{ $student->username }}</td>
+                        <td>{{ $student->student_password }}</td>
                     </tr>
                 @endforeach
                 </tbody>

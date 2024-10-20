@@ -15,6 +15,7 @@ enum ModeTypes: string
     case NUMBER_SUBTRACTION = 'subtraction';
     case NUMBER_MULTIPLICATION = 'multiplication';
     case NUMBER_DIVISION = 'division';
+
     public static function getModes(?string $subject = null): array
     {
         if (is_null($subject)) {
@@ -40,5 +41,36 @@ enum ModeTypes: string
         }
 
         return $modes;
+    }
+
+    public static function getModesWithTranslations(): array
+    {
+        return [
+            self::LETTER_EXPLORE->value => 'Әріптерді зерттеу',
+            self::LETTER_FIND->value => 'Әріпті табу',
+            self::WORD_DICTATION->value => 'Диктант',
+            self::WORD_PICTURE->value => 'Сурет бойынша сөз табу',
+            self::WORD_MISSING->value => 'Жіберілген әріпті табу',
+            self::NUMBER_ADDITION->value => 'Қосу',
+            self::NUMBER_SUBTRACTION->value => 'Азайту',
+            self::NUMBER_MULTIPLICATION->value => 'Көбейту',
+            self::NUMBER_DIVISION->value => 'Бөлу',
+        ];
+    }
+
+    public static function translate(string $value): string
+    {
+        return match ($value) {
+            self::LETTER_EXPLORE->value => 'Әріптерді зерттеу',
+            self::LETTER_FIND->value => 'Әріпті табу',
+            self::WORD_DICTATION->value => 'Диктант',
+            self::WORD_PICTURE->value => 'Сурет бойынша сөз табу',
+            self::WORD_MISSING->value => 'Жіберілген әріпті табу',
+            self::NUMBER_ADDITION->value => 'Қосу',
+            self::NUMBER_SUBTRACTION->value => 'Азайту',
+            self::NUMBER_MULTIPLICATION->value => 'Көбейту',
+            self::NUMBER_DIVISION->value => 'Бөлу',
+            default => 'Unknown', // значение по умолчанию, если передан несуществующий режим
+        };
     }
 }

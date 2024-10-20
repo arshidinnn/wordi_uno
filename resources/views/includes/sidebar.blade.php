@@ -7,23 +7,23 @@
             @can('isRoot', \App\Models\User::class)
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('words.index') ? 'active' : '' }}" href="{{ route('words.index') }}">
-                            <i class="fas fa-book"></i> {{ __('Words') }}
+                        <a class="nav-link {{ request()->routeIs('words.*') ? 'active' : '' }}" href="{{ route('words.index') }}">
+                            <i class="fas fa-book"></i> Сөздер
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('letters.index') ? 'active' : '' }}" href="{{ route('letters.index') }}">
-                            <i class="fas fa-font"></i> {{ __('Letters') }}
+                        <a class="nav-link {{ request()->routeIs('letters.*') ? 'active' : '' }}" href="{{ route('letters.index') }}">
+                            <i class="fas fa-font"></i> Әріптер
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('numbers.index') ? 'active' : '' }}" href="{{ route('numbers.index') }}">
-                            <i class="fas fa-hashtag"></i> {{ __('Numbers') }}
+                        <a class="nav-link {{ request()->routeIs('numbers.*') ? 'active' : '' }}" href="{{ route('numbers.index') }}">
+                            <i class="fas fa-hashtag"></i> Сандар
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('modes.index') ? 'active' : '' }}" href="{{ route('modes.index') }}">
-                            <i class="fas fa-cogs"></i> {{ __('Modes') }}
+                        <a class="nav-link {{ request()->routeIs('modes.*') ? 'active' : '' }}" href="{{ route('modes.index') }}">
+                            <i class="fas fa-cogs"></i> Режимдер
                         </a>
                     </li>
                 </ul>
@@ -31,25 +31,26 @@
             @can('isTeacher', \App\Models\User::class)
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('groups.index') ? 'active' : '' }}" href="{{ route('groups.index') }}">
-                            <i class="fas fa-users"></i> {{ __('Groups') }}
+                        <a class="nav-link {{ request()->routeIs('groups.*') ? 'active' : '' }}" href="{{ route('groups.index') }}">
+                            <i class="fas fa-users"></i> Топтар
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('tasks.index') ? 'active' : '' }}" href="{{ route('tasks.index') }}">
-                            <i class="fas fa-tasks"></i> {{ __('Tasks') }}
+                        <a class="nav-link {{ request()->routeIs('tasks.*') ? 'active' : '' }}" href="{{ route('tasks.index') }}">
+                            <i class="fas fa-tasks"></i> Тапсырмалар
                         </a>
                     </li>
                 </ul>
             @endcan
         </div>
+
         <div class="logout-container py-5">
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <form action="{{ route('auth.logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="nav-link logout-link">
-                            <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
+                            <i class="fas fa-sign-out-alt"></i> Шығу
                         </button>
                     </form>
                 </li>
@@ -111,8 +112,8 @@
     }
 
     .logout-link:hover {
-        background-color: #c82333;
-        color: #fff;
+        background-color: #c82333 !important;
+        color: #fff !important;;
     }
 
     .logout-container {

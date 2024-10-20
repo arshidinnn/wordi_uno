@@ -16,4 +16,13 @@ enum NumberRange: string
         }
         return $numberRanges;
     }
+
+    public static function getNumberRangesWithTranslations(): array
+    {
+        return [
+            self::SINGLE_DIGIT->value => 'Бір таңбалы сан',
+            self::DOUBLE_DIGIT->value => 'Екі таңбалы сан',
+            self::TRIPLE_DIGIT->value => 'Үш таңбалы сан',
+        ];
+    }
 }

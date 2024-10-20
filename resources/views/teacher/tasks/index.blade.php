@@ -1,9 +1,9 @@
 @extends('layouts.index')
 
-@section('title', __('Tasks'))
+@section('title', 'Тапсырмалар')
 
 @section('content')
-    <h2 class="my-4">Table with Filters and Search</h2>
+    <h2 class="my-4">Сүзгілер мен іздеуі бар кесте</h2>
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -12,20 +12,19 @@
 
     @if($tasks->isEmpty())
         <div class="alert alert-warning">
-            {{ __('No modes found.') }}
+            Ешқандай режим табылмады.
         </div>
     @else
-        <!-- Table -->
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead class="table-light">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Mode</th>
-                    <th scope="col">Assigned To</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Атауы</th>
+                    <th scope="col">Түрі</th>
+                    <th scope="col">Режимі</th>
+                    <th scope="col">Тағайындалған</th>
+                    <th scope="col">Әрекет</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,19 +32,19 @@
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
                         <td>{{ $task->name }}</td>
-                        <td>{{ $task->type }}</td>
-                        <td>{{ $task->mode }}</td>
+                        <td>{{ App\Enums\TaskTypes::translate($task->type->value) }}</td>
+                        <td>{{ App\Enums\ModeTypes::translate($task->mode) }}</td>
                         <td>
                             @if($task->group)
-                                Group: {{ $task->group->name }}
+                                Топ: {{ $task->group->name }}
                             @elseif($task->user)
-                                User: {{ $task->user->firstname }} {{ $task->user->lastname }}
+                                Оқушы: {{ $task->user->firstname }} {{ $task->user->lastname }}
                             @else
-                                N/A
+                                Қол жетімді емес
                             @endif
                         </td>
                         <td>
-                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" onsubmit="return confirm('{{ __('Are you sure you want to delete this task?') }}');">
+                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" onsubmit="return confirm('Бұл тапсырманы өшіруге сенімдісіз бе?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger">
@@ -65,6 +64,6 @@
     @endif
 
     <div class="mb-3">
-        <a href="{{ route('tasks.create') }}" class="btn btn-success">{{ __('Add Task') }}</a>
+        <a href="{{ route('tasks.create') }}" class="btn btn-success">Тапсырма қосу</a>
     </div>
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.student')
 
-@section('title', 'Task')
+@section('title', 'Тапсырма')
 
 @push('styles')
     <style>
@@ -30,7 +30,7 @@
                     <div class="p-5">
                         <img src="{{ asset('icons/correct.webp') }}" alt="Correct" class="img-fluid w-50 mb-2" id="resultIcon">
                     </div>
-                    <p class="h2">Правильный ответ: слово</p>
+                    <p class="h2">Дұрыс жауап: сөз</p>
                 </div>
             </div>
         </div>
@@ -40,20 +40,18 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-center border-0">
                 <div class="modal-header border-0">
-                    <h2 class="modal-title w-100" id="finalResultModalLabel">Результат</h2>
+                    <h2 class="modal-title w-100" id="finalResultModalLabel">Қорытынды</h2>
                 </div>
                 <div class="modal-body">
                     <p class="h1" id="finalResultScore">0/0</p>
                     <div class="mt-4">
-                        <button class="btn btn-primary" id="startAgainBtn">Начать сначала</button>
-                        <button class="btn btn-secondary" id="closeBtn">Закрыть</button>
+                        <button class="btn btn-primary" id="startAgainBtn">Қайтадан бастау</button>
+                        <button class="btn btn-secondary" id="closeBtn">Жабу</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 @endsection
 
 @push('scripts')
@@ -106,7 +104,7 @@
                         $('#timerDisplay').text(currentTime);
                         if (currentTime <= 0) {
                             clearInterval(timerInterval);
-                            $('#resultModal p').text('Время вышло! Правильный ответ: ' + correctResult);
+                            $('#resultModal p').text('Уақыты бітті! Дұрыс жауап: ' + correctResult);
                             $('#resultIcon').attr('src', '/icons/incorrect.webp');
                             $('#resultModal').modal('show');
                             setTimeout(() => {
@@ -211,10 +209,10 @@
                 if (userInput.length === underscores.length) {
                     const isCorrect = parseInt(userInput) === correctResult;
                     const resultIcon = isCorrect ? 'correct.webp' : 'incorrect.webp';
-                    let resultMessage = isCorrect ? 'Правильный ответ!' : 'Неправильный ответ.';
+                    let resultMessage = isCorrect ? 'Дұрыс жауап!' : 'Қате жауап.';
 
                     if (!isCorrect && showCorrectedAnswer) {
-                        resultMessage += ` Правильный ответ: ${correctResult}`;
+                        resultMessage += ` Дұрыс жауап: ${correctResult}`;
                     }
 
                     if (isCorrect) {

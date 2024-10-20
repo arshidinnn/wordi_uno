@@ -9,7 +9,7 @@ class UpdateModeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => 'required|image|mimes:jpeg,png,jpg,svg|max:5120',
+            'image' => 'required|image|mimes:jpeg,png,jpg,svg,webp,avif|max:5120',
         ];
     }
 }

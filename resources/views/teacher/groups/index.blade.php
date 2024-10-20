@@ -1,9 +1,9 @@
 @extends('layouts.index')
 
-@section('title', __('Groups'))
+@section('title', 'Топтар')
 
 @section('content')
-    <h2 class="my-4">Table with Filters and Search</h2>
+    <h2 class="my-4">Сүзгілер мен іздеуі бар кесте</h2>
 
     @if(session('success'))
         <div class="alert alert-success">
@@ -13,18 +13,18 @@
 
     @if($groups->isEmpty())
         <div class="alert alert-warning">
-            {{ __('No groups found.') }}
+            Ешқандай топ табылмады.
         </div>
     @else
-        <!-- Table -->
+        <!-- Кесте -->
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead class="table-light">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Students Count</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Атауы</th>
+                    <th scope="col">Оқушылар саны</th>
+                    <th scope="col">Әрекет</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,7 +37,7 @@
                             <a href="{{ route('groups.show', $group->id) }}" class="btn btn-sm btn-primary">
                                 <i class="fa fa-eye"></i>
                             </a>
-                            <form action="{{ route('groups.destroy', $group->id) }}" method="POST" onsubmit="return confirm('{{ __('Are you sure you want to delete this group?') }}');" style="display:inline;">
+                            <form action="{{ route('groups.destroy', $group->id) }}" method="POST" onsubmit="return confirm('Бұл топты өшіруге сенімдісіз бе?');" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger">
@@ -57,6 +57,6 @@
     @endif
 
     <div class="mb-3">
-        <a href="{{ route('groups.create') }}" class="btn btn-success">{{ __('Add group') }}</a>
+        <a href="{{ route('groups.create') }}" class="btn btn-success">Топ қосу</a>
     </div>
 @endsection

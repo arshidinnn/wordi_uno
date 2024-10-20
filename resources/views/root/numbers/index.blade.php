@@ -1,9 +1,9 @@
 @extends('layouts.index')
 
-@section('title', __('Numbers'))
+@section('title', 'Сандар')
 
 @section('content')
-    <h2 class="my-4"> {{ __('Numbers') }} </h2>
+    <h2 class="my-4">Сандар</h2>
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -12,17 +12,16 @@
 
     @if($numbers->isEmpty())
         <div class="alert alert-warning">
-            {{ __('No numbers found.') }}
+            Ешқандай сан табылмады.
         </div>
     @else
-        <!-- Table -->
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead class="table-light">
                 <tr>
-                    <th scope="col">{{ __('Number') }}</th>
-                    <th scope="col">{{ __('Sound') }}</th>
-                    <th scope="col">{{ __('Action') }}</th>
+                    <th scope="col">Сан</th>
+                    <th scope="col">Дыбыс</th>
+                    <th scope="col">Әрекет</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,15 +32,14 @@
                             @if($number->sound)
                                 <audio controls>
                                     <source src="{{ $number->sound }}" type="audio/mpeg">
-                                    Your browser does not support the audio tag.
+                                    Сіздің браузеріңіз аудио тэгті қолдамайды.
                                 </audio>
                             @else
-                                {{ __('No sound') }}
+                                Дыбыс жоқ
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('numbers.edit', $number) }}"
-                               class="btn btn-sm btn-primary">{{ __('Edit') }}</a>
+                            <a href="{{ route('numbers.edit', $number) }}" class="btn btn-sm btn-primary">Өңдеу</a>
                         </td>
                     </tr>
                 @endforeach
@@ -49,12 +47,11 @@
             </table>
         </div>
     @endif
-    <!-- Add Button -->
     @if($numbers->count() != 42)
         <div class="mb-4">
             <form action="{{ route('numbers.store') }}" method="POST">
                 @csrf
-                <button type="submit" class="btn btn-success">{{ __('Add missing numbers') }}</button>
+                <button type="submit" class="btn btn-success">Жетіспейтін сандарды қосу</button>
             </form>
         </div>
     @endif

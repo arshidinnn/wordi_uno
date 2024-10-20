@@ -1,9 +1,9 @@
 @extends('layouts.index')
 
-@section('title', __('Letters'))
+@section('title', 'Әріптер')
 
 @section('content')
-    <h2 class="my-4"> {{ __('Letters') }} </h2>
+    <h2 class="my-4">Әріптер</h2>
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -12,17 +12,17 @@
 
     @if($letters->isEmpty())
         <div class="alert alert-warning">
-            {{ __('No letters found.') }}
+            Ешқандай әріп табылмады.
         </div>
     @else
-        <!-- Table -->
+        <!-- Кесте -->
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead class="table-light">
                 <tr>
-                    <th scope="col">{{ __('Letter') }}</th>
-                    <th scope="col">{{ __('Sound') }}</th>
-                    <th scope="col">{{ __('Action') }}</th>
+                    <th scope="col">Әріп</th>
+                    <th scope="col">Дыбыс</th>
+                    <th scope="col">Әрекет</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,14 +33,14 @@
                             @if($letter->sound)
                                 <audio controls>
                                     <source src="{{ $letter->sound }}" type="audio/mpeg">
-                                    Your browser does not support the audio tag.
+                                    Сіздің браузеріңіз аудио тэгті қолдамайды.
                                 </audio>
                             @else
-                                {{ __('No sound') }}
+                                Дыбыс жоқ
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('letters.edit', $letter) }}" class="btn btn-sm btn-primary">{{ __('Edit') }}</a>
+                            <a href="{{ route('letters.edit', $letter) }}" class="btn btn-sm btn-primary">Өңдеу</a>
                         </td>
                     </tr>
                 @endforeach
@@ -48,12 +48,12 @@
             </table>
         </div>
     @endif
-    <!-- Add Button -->
+    <!-- Қосу батырмасы -->
     @if($letters->count() != 42)
         <div class="mb-4">
             <form action="{{ route('letters.store') }}" method="POST">
                 @csrf
-                <button type="submit" class="btn btn-success">{{ __('Add missing letters') }}</button>
+                <button type="submit" class="btn btn-success">Жетіспейтін әріптерді қосу</button>
             </form>
         </div>
     @endif

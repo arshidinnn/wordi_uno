@@ -1,9 +1,9 @@
 @extends('layouts.index')
 
-@section('title', __(''))
+@section('title', '')
 
 @section('content')
-    <h2 class="my-4"> {{ __('Modes') }} </h2>
+    <h2 class="my-4"> Режимдер </h2>
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -12,33 +12,36 @@
 
     @if($modes->isEmpty())
         <div class="alert alert-warning">
-            {{ __('No modes found.') }}
+            Ешқандай режим табылмады.
         </div>
     @else
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead class="table-light">
                 <tr>
-                    <th scope="col">{{ __('Name') }}</th>
-                    <th scope="col">{{ __('Subject') }}</th>
-                    <th scope="col">{{ __('Image') }}</th>
-                    <th scope="col">{{ __('Action') }}</th>
+                    <th scope="col">Атауы</th>
+                    <th scope="col">Бағыт</th>
+                    <th scope="col">Сурет</th>
+                    <th scope="col">Әрекет</th>
                 </tr>
                 </thead>
                 <tbody>
+                @php
+                    $modeTranslations = \App\Enums\ModeTypes::getModesWithTranslations();
+                @endphp
                 @foreach($modes as $mode)
                     <tr>
-                        <td>{{ $mode->name }}</td>
-                        <td>{{ $mode->subject }}</td>
+                        <td>{{ $modeTranslations[$mode->name] ?? $mode->name }}</td>
+                        <td>{{ \App\Enums\SubjectTypes::translate($mode->subject->value)  }}</td>
                         <td>
                             @if($mode->image)
                                 <img src="{{ $mode->image }}" alt="{{ $mode->name }}" style="max-width: 100px;">
                             @else
-                                {{ __('No image') }}
+                                Сурет жоқ
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('modes.edit', $mode) }}" class="btn btn-sm btn-primary">{{ __('Edit') }}</a>
+                            <a href="{{ route('modes.edit', $mode) }}" class="btn btn-sm btn-primary">Өңдеу</a>
                         </td>
                     </tr>
                 @endforeach

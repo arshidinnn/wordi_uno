@@ -17,7 +17,7 @@ class LetterService
 
         return redirect()
             ->route('letters.index')
-            ->with('success', __('Letters created successfully.'));
+            ->with('success', 'Әріптер сәтті жасалды.');
     }
 
     public function update(UpdateLetterRequest $request, Letter $letter): RedirectResponse
@@ -39,6 +39,6 @@ class LetterService
 
         return redirect()
             ->route('letters.index')
-            ->with('success', __('Sound for letter updated successfully'));
+            ->with('success', 'Әріптің дыбысы сәтті жаңартылды');
     }
 }

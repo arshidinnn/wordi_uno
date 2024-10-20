@@ -35,6 +35,6 @@ class GroupService
 
         return redirect()
             ->route('groups.index')
-            ->with('success', 'Group created successfully');
+            ->with('success', 'Топ сәтті жасалды');
     }
 }

@@ -16,7 +16,7 @@ class NumberService
         Artisan::call('create:numbers');
         return redirect()
             ->route('numbers.index')
-            ->with('success', __('Numbers created successfully'));
+            ->with('success', 'Сандар сәтті жасалды');
     }
 
     public function update(UpdateNumberRequest $request, Number $number): RedirectResponse
@@ -38,6 +38,6 @@ class NumberService
 
         return redirect()
             ->route('numbers.index')
-            ->with('success', __('Sound for number updated successfully'));
+            ->with('success', 'Санның дыбысы сәтті жаңартылды');
     }
 }

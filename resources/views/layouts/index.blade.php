@@ -41,7 +41,7 @@
 
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
-<script src="https://kit.fontawesome.com/5908e8db34.js" crossorigin="anonymous"></script>
+<script src="{{ asset('js/fontawesome.js') }}"></script>
 @stack('script')
 </body>
 

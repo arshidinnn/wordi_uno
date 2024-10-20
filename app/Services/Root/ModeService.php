@@ -17,7 +17,7 @@ class ModeService
 
         return redirect()
             ->route('modes.index')
-            ->with('success', __('Modes created successfully.'));
+            ->with('success', 'Режимдер сәтті жасалды.');
     }
 
     public function update(UpdateModeRequest $request, Mode $mode): RedirectResponse
@@ -39,6 +39,6 @@ class ModeService
 
         return redirect()
             ->route('modes.index')
-            ->with('success', __('Image for mode updated successfully'));
+            ->with('success', 'Режимнің суреті сәтті жаңартылды');
     }
 }
