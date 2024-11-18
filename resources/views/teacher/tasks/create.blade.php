@@ -171,7 +171,7 @@
             @enderror
         </div>
 
-        <div class="mb-3 form-check">
+        <div id="show_corrected_answer" class="mb-3 form-check">
             <input type="hidden" name="show_corrected_answer" value="0">
             <input type="checkbox" id="show_corrected_answer" name="show_corrected_answer" class="form-check-input @error('show_corrected_answer') is-invalid @enderror" value="1" {{ old('show_corrected_answer') ? 'checked' : '' }}>
             <label class="form-check-label" for="show_corrected_answer">Дұрыс жауапты көрсету</label>
@@ -212,9 +212,50 @@
         $(document).ready(function () {
             function updateVisibility() {
                 let selectedSubject = $('#subject').val();
+                let selectedMode = $('#mode').val();
                 let targetType = $('#target_type').val();
                 let timersEnabled = $('#timers_enabled').is(':checked');
                 let taskType = $('#type').val();
+
+                // Если subject: letter, принудительно устанавливаем type = learning и скрываем поле
+                if (selectedSubject === 'letter' || selectedSubject === 'word') {
+                    $('#type').val('learning'); // Устанавливаем значение
+                    taskType = $('#type').val();
+
+                    $('#type').closest('.mb-3').hide(); // Скрываем поле и заголовок
+                    //$('#question_count_div').hide(); // Скрываем "Количество вопросов"
+                } else {
+                    $('#type').closest('.mb-3').show(); // Показываем поле type
+                }
+
+                // Показ или скрытие "Количество вопросов" в зависимости от type
+                if (taskType === 'test') {
+                    $('#question_count_div').show();
+                } else {
+                    $('#question_count_div').hide();
+                }
+
+                // Таймеры отключаются, если mode = explore
+                if (selectedMode === 'explore') {
+                    $('#timers_enabled').prop('checked', false).closest('.form-check').hide();
+                    $('#timer_type_div').hide();
+                    $('#timer_value_div').hide();
+                    $('#show_corrected_answer').hide();
+                } else {
+                    $('#timers_enabled').closest('.form-check').show();
+                    if (timersEnabled) {
+                        if (taskType === 'learning') {
+                            $('#timer_type_div').hide();
+                            $('#timer_type').val('iteration_timer');
+                        } else if (taskType === 'test') {
+                            $('#timer_type_div').show();
+                        }
+                        $('#timer_value_div').show();
+                    } else {
+                        $('#timer_type_div').hide();
+                        $('#timer_value_div').hide();
+                    }
+                }
 
                 if (selectedSubject === 'number') {
                     $('#number_range_div').show();
@@ -231,27 +272,6 @@
                     $('#group_id_div').hide();
                 }
 
-                if (timersEnabled) {
-                    if (taskType === 'learning') {
-                        $('#timer_type_div').hide();
-                        $('#timer_type').val('iteration_timer');
-                    } else if (taskType === 'test') {
-                        $('#timer_type_div').show();
-                    }
-                    $('#timer_value_div').show();
-                } else {
-                    $('#timer_type_div').hide();
-                    $('#timer_value_div').hide();
-                }
-
-                if (taskType === 'test') {
-                    $('#deadline_div').show();
-                    $('#question_count_div').show();
-                } else {
-                    $('#deadline_div').hide();
-                    $('#question_count_div').hide();
-                }
-
                 if (selectedSubject) {
                     $('#mode_div').show();
                     $('.mode-group').hide();
@@ -261,25 +281,20 @@
                 }
             }
 
+            // Инициализация
             updateVisibility();
 
-            $('#subject').change(function() {
-                $('#mode').val('');
+            // События изменения
+            $('#subject').change(function () {
+                $('#mode').val(''); // Сбросить выбранный режим
                 updateVisibility();
             });
 
-            $('#target_type, #timers_enabled, #type').change(function() {
-                let taskType = $('#type').val();
-
-                if (taskType === 'learning') {
-                    $('#timer_type').val('iteration_timer');
-                } else if (taskType === 'test') {
-                    $('#timer_type').val('');
-                }
-
+            $('#mode, #target_type, #timers_enabled, #type').change(function () {
                 updateVisibility();
             });
 
+            // При отправке формы
             $('#task-form').on('submit', function () {
                 let selectedSubject = $('#subject').val();
 
